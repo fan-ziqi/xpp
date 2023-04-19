@@ -60,10 +60,9 @@ namespace xpp
 
 		/**
 		 * @brief Returns the joint angles to reach a Cartesian foot position.
-		 * @param ee_pos_H  Foot position xyz expressed in the frame attached
-		 * at the hip-aa (H).
+		 * @param ee_pos_H  hip-aa (H) 坐标系中脚的位置 xyz
 		 */
-		Vector3d GetJointAngles(const Vector3d &ee_pos_H, KneeBend bend = Forward) const;
+		Vector3d GetJointAngles(const Vector3d &ee_pos_H, int _sideSign) const;
 
 		/**
 		 * @brief Restricts the joint angles to lie inside the feasible range
@@ -74,9 +73,12 @@ namespace xpp
 		void EnforceLimits(double &q, CyberdogJointID joint) const;
 
 	private:
-		Vector3d hfe_to_haa_z = Vector3d(0.0, 0.0, 0.08); //distance of HFE to HAA in z direction
-		double length_thigh = 0.35; // length of upper leg
-		double length_shank = 0.33; // length of lower leg
+		double _abadLinkLength = 0.10715;
+		double _hipLinkLength = 0.2;
+		double _kneeLinkLength = 0.217;
+		static double q1_ik(double py, double pz, double l1);
+		static double q3_ik(double b3z, double b4z, double b);
+		static double q2_ik(double q1, double q3, double px, double py, double pz, double b3z, double b4z);
 	};
 
 } /* namespace xpp */

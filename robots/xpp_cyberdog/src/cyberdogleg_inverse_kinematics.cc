@@ -37,114 +37,99 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace xpp
 {
-
-
 	CyberdoglegInverseKinematics::Vector3d
-	CyberdoglegInverseKinematics::GetJointAngles(const Vector3d &ee_pos_B, KneeBend bend) const
+	CyberdoglegInverseKinematics::GetJointAngles(const Vector3d &ee_pos_H, int _sideSign) const
 	{
-		double q_HAA_bf, q_HAA_br, q_HFE_br; // rear bend of knees
-		double q_HFE_bf, q_KFE_br, q_KFE_bf; // forward bend of knees
+		Vector3d pEe2H;
+		pEe2H = ee_pos_H;
 
-		Eigen::Vector3d xr;
-		Eigen::Matrix3d R;
+		double q1, q2, q3;
+		Vector3d qResult;
+		double px, py, pz;
+		double b2y, b3z, b4z, a, b, c;
 
-		// translate to the local coordinate of the attachment of the leg
-		// and flip coordinate signs such that all computations can be done
-		// for the front-left leg
-		xr = ee_pos_B;
+		px = pEe2H(0);
+		py = pEe2H(1);
+		pz = pEe2H(2);
 
-		// compute the HAA angle
-		q_HAA_bf = q_HAA_br = -atan2(xr[Y], -xr[Z]);
+		b2y = _abadLinkLength * _sideSign;
+		b3z = -_hipLinkLength;
+		b4z = -_kneeLinkLength;
+		a = _abadLinkLength;
+		c = sqrt(pow(px, 2) + pow(py, 2) + pow(pz, 2)); // whole length
+		b = sqrt(pow(c, 2) - pow(a, 2)); // distance between shoulder and footpoint
 
-		// rotate into the HFE coordinate system (rot around X)
-		R << 1.0, 0.0, 0.0, 0.0, cos(q_HAA_bf), -sin(q_HAA_bf), 0.0, sin(q_HAA_bf), cos(q_HAA_bf);
+		q1 = q1_ik(py, pz, b2y);
+		q3 = q3_ik(b3z, b4z, b);
+		q2 = q2_ik(q1, q3, px, py, pz, b3z, b4z);
 
-		xr = (R * xr).eval();
+		EnforceLimits(q1, HAA);
+		EnforceLimits(q2, HFE);
+		EnforceLimits(q3, KFE);
 
-		// translate into the HFE coordinate system (along Z axis)
-		xr += hfe_to_haa_z;  //distance of HFE to HAA in z direction
+		qResult(0) = q1;
+		qResult(1) = q2;
+		qResult(2) = q3;
 
-		// compute square of length from HFE to foot
-		double tmp1 = pow(xr[X], 2) + pow(xr[Z], 2);
+		return qResult;
+	}
 
+	double CyberdoglegInverseKinematics::q1_ik(double py, double pz, double l1)
+	{
+		float q1;
+		float L = sqrt(pow(py, 2) + pow(pz, 2) - pow(l1, 2));
+		q1 = atan2(pz * l1 + py * L, py * l1 - pz * L);
+		return -q1;
+	}
 
-		// compute temporary angles (with reachability check)
-		double lu = length_thigh;  // length of upper leg
-		double ll = length_shank;  // length of lower leg
-		double alpha = atan2(-xr[Z], xr[X]) - 0.5 * M_PI;  //  flip and rotate to match cyberdog joint definition
+	double CyberdoglegInverseKinematics::q3_ik(double b3z, double b4z, double b)
+	{
+		double q3, temp;
+		temp = (pow(b3z, 2) + pow(b4z, 2) - pow(b, 2)) / (2 * fabs(b3z * b4z));
+		if(temp > 1) temp = 1;
+		if(temp < -1) temp = -1;
+		q3 = acos(temp);
+		q3 = -(M_PI - q3); //0~180
+		return q3;
+	}
 
+	double CyberdoglegInverseKinematics::q2_ik(double q1, double q3, double px, double py, double pz, double b3z, double b4z)
+	{
+		double q2, a1, a2, m1, m2;
 
-		double some_random_value_for_beta = (pow(lu, 2) + tmp1 - pow(ll, 2)) / (2. * lu * sqrt(tmp1)); // this must be between -1 and 1
-		if(some_random_value_for_beta > 1)
-		{
-			some_random_value_for_beta = 1;
-		}
-		if(some_random_value_for_beta < -1)
-		{
-			some_random_value_for_beta = -1;
-		}
-		double beta = acos(some_random_value_for_beta);
-
-		// compute Hip FE angle
-		q_HFE_bf = q_HFE_br = alpha + beta;
-
-
-		double some_random_value_for_gamma = (pow(ll, 2) + pow(lu, 2) - tmp1) / (2. * ll * lu);
-		// law of cosines give the knee angle
-		if(some_random_value_for_gamma > 1)
-		{
-			some_random_value_for_gamma = 1;
-		}
-		if(some_random_value_for_gamma < -1)
-		{
-			some_random_value_for_gamma = -1;
-		}
-		double gamma = acos(some_random_value_for_gamma);
-
-
-		q_KFE_bf = q_KFE_br = gamma - M_PI;
-
-		// forward knee bend
-		EnforceLimits(q_HAA_bf, HAA);
-		EnforceLimits(q_HFE_bf, HFE);
-		EnforceLimits(q_KFE_bf, KFE);
-
-		// backward knee bend
-		EnforceLimits(q_HAA_br, HAA);
-		EnforceLimits(q_HFE_br, HFE);
-		EnforceLimits(q_KFE_br, KFE);
-
-		if(bend == Forward)
-			return Vector3d(q_HAA_bf, q_HFE_bf, q_KFE_bf);
-		else // backward
-			return Vector3d(q_HAA_br, -q_HFE_br, -q_KFE_br);
+		a1 = py * sin(q1) - pz * cos(q1);
+		a2 = px;
+		m1 = b4z * sin(q3);
+		m2 = b3z + b4z * cos(q3);
+		q2 = atan2(m1 * a1 + m2 * a2, m1 * a2 - m2 * a1);
+		return q2;
 	}
 
 	void
 	CyberdoglegInverseKinematics::EnforceLimits(double &val, CyberdogJointID joint) const
 	{
 		// totally exaggerated joint angle limits
-		const static double haa_min = -180;
-		const static double haa_max = 90;
+		const static double haa_min = -0.75;
+		const static double haa_max = 0.75;
 
-		const static double hfe_min = -90;
-		const static double hfe_max = 90;
+		const static double hfe_min = -1.257;
+		const static double hfe_max = 3.49;
 
-		const static double kfe_min = -180;
-		const static double kfe_max = 0;
+		const static double kfe_min = -2.478;
+		const static double kfe_max = -0.506;
 
 		// reduced joint angles for optimization
 		static const std::map<CyberdogJointID, double> max_range{
-				{HAA, haa_max / 180.0 * M_PI},
-				{HFE, hfe_max / 180.0 * M_PI},
-				{KFE, kfe_max / 180.0 * M_PI}
+				{HAA, haa_max},
+				{HFE, hfe_max},
+				{KFE, kfe_max}
 		};
 
 		// reduced joint angles for optimization
 		static const std::map<CyberdogJointID, double> min_range{
-				{HAA, haa_min / 180.0 * M_PI},
-				{HFE, hfe_min / 180.0 * M_PI},
-				{KFE, kfe_min / 180.0 * M_PI}
+				{HAA, haa_min},
+				{HFE, hfe_min},
+				{KFE, kfe_min}
 		};
 
 		double max = max_range.at(joint);
