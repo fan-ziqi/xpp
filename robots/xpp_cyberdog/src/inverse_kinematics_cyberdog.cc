@@ -46,8 +46,6 @@ namespace xpp
 		auto pos_B = x_B.ToImpl(); // Base坐标系下的落足点
 		pos_B.resize(4, pos_B.front());
 
-		int _sideSign;
-
 		for(int ee = 0; ee < pos_B.size(); ++ee)
 		{
 
@@ -56,26 +54,22 @@ namespace xpp
 			{
 				case LF:
 					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(1, 1, 1));
-					_sideSign = -1;
 					break;
 				case RF:
 					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(1, -1, 1));
-					_sideSign = 1;
 					break;
 				case LH:
 					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(-1, 1, 1));
-					_sideSign = -1;
 					break;
 				case RH:
 					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(-1, -1, 1));
-					_sideSign = 1;
 					break;
 				default: // joint angles for this foot do not exist
 					break;
 			}
 
 			ee_pos_H = ee_pos_B - base2hip_LF_;
-			q_vec.push_back(leg.GetJointAngles(ee_pos_H, _sideSign));
+			q_vec.push_back(leg.GetJointAngles(ee_pos_H));
 		}
 
 		return Joints(q_vec);

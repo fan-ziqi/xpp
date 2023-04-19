@@ -62,7 +62,7 @@ namespace xpp
 		 * @brief Returns the joint angles to reach a Cartesian foot position.
 		 * @param ee_pos_H  hip-aa (H) 坐标系中脚的位置 xyz
 		 */
-		Vector3d GetJointAngles(const Vector3d &ee_pos_H, int _sideSign) const;
+		Vector3d GetJointAngles(const Vector3d &ee_pos_H) const;
 
 		/**
 		 * @brief Restricts the joint angles to lie inside the feasible range
