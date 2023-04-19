@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace xpp
 {
 	CyberdoglegInverseKinematics::Vector3d
-	CyberdoglegInverseKinematics::GetJointAngles(const Vector3d &ee_pos_H) const
+	CyberdoglegInverseKinematics::GetJointAngles(const Vector3d &ee_pos_H, int _sideSign) const
 	{
 		Vector3d pEe2H;
 		pEe2H = ee_pos_H;
@@ -52,7 +52,7 @@ namespace xpp
 		py = pEe2H(1);
 		pz = pEe2H(2);
 
-		b2y = _abadLinkLength;
+		b2y = _abadLinkLength * _sideSign;
 		b3z = -_hipLinkLength;
 		b4z = -_kneeLinkLength;
 		a = _abadLinkLength;
@@ -79,7 +79,7 @@ namespace xpp
 		float q1;
 		float L = sqrt(pow(py, 2) + pow(pz, 2) - pow(l1, 2));
 		q1 = atan2(pz * l1 + py * L, py * l1 - pz * L);
-		return -q1;
+		return q1;
 	}
 
 	double CyberdoglegInverseKinematics::q3_ik(double b3z, double b4z, double b)

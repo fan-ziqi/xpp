@@ -40,11 +40,15 @@ namespace xpp
 	{
 		Vector3d ee_pos_B; // Base坐标系下的落足点
 		Vector3d ee_pos_H; // Hip坐标系下的落足点
-		std::vector<Eigen::VectorXd> q_vec;
+		std::vector <Eigen::VectorXd> q_vec;
 
 		// make sure always exactly 4 elements
 		auto pos_B = x_B.ToImpl(); // Base坐标系下的落足点
 		pos_B.resize(4, pos_B.front());
+
+		Vector3d _pHip2B;
+
+		int _sideSign;
 
 		for(int ee = 0; ee < pos_B.size(); ++ee)
 		{
@@ -52,24 +56,33 @@ namespace xpp
 			using namespace quad;
 			switch(ee)
 			{
-				case LF:
-					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(1, 1, 1));
-					break;
 				case RF:
-					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(1, -1, 1));
+					ee_pos_B = pos_B.at(ee);
+					_pHip2B << 0.235, -0.05, 0;
+					_sideSign = -1;
 					break;
-				case LH:
-					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(-1, 1, 1));
+				case LF:
+					ee_pos_B = pos_B.at(ee);
+					_pHip2B << 0.235, 0.05, 0;
+					_sideSign = 1;
 					break;
 				case RH:
-					ee_pos_B = pos_B.at(ee).cwiseProduct(Eigen::Vector3d(-1, -1, 1));
+					ee_pos_B = pos_B.at(ee);
+					_pHip2B << -0.235, -0.05, 0;
+					_sideSign = -1;
+					break;
+				case LH:
+					ee_pos_B = pos_B.at(ee);
+					_pHip2B << -0.235, 0.05, 0;
+					_sideSign = 1;
 					break;
 				default: // joint angles for this foot do not exist
 					break;
 			}
 
-			ee_pos_H = ee_pos_B - base2hip_LF_;
-			q_vec.push_back(leg.GetJointAngles(ee_pos_H));
+//			ee_pos_H = ee_pos_B - base2hip_LF_;
+			ee_pos_H = ee_pos_B - _pHip2B;
+			q_vec.push_back(leg.GetJointAngles(ee_pos_H, _sideSign));
 		}
 
 		return Joints(q_vec);
