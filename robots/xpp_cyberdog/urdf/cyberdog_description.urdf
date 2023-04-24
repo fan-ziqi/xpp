@@ -2,7 +2,7 @@
 <!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
-<robot name="cyberdog_description">
+<robot name="xpp_cyberdog">
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0"/>
   </material>
@@ -248,7 +248,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/body.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/body.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -259,7 +259,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/body.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/body.STL" />
       </geometry>
     </collision>
   </link>
@@ -309,7 +309,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_fr.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_fr.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -320,7 +320,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_fr.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_fr.STL" />
       </geometry>
     </collision>
   </link>
@@ -361,7 +361,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_fr.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_fr.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -372,7 +372,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_fr.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_fr.STL" />
       </geometry>
     </collision>
   </link>
@@ -413,7 +413,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_fr.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_fr.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -424,7 +424,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_fr.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_fr.STL" />
       </geometry>
     </collision>
   </link>
@@ -521,7 +521,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_fl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_fl.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -532,7 +532,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_fl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_fl.STL" />
       </geometry>
     </collision>
   </link>
@@ -573,7 +573,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_fl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_fl.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -584,7 +584,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_fl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_fl.STL" />
       </geometry>
     </collision>
   </link>
@@ -625,7 +625,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_fl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_fl.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -636,7 +636,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_fl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_fl.STL" />
       </geometry>
     </collision>
   </link>
@@ -733,7 +733,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_br.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_br.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -744,7 +744,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_br.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_br.STL" />
       </geometry>
     </collision>
   </link>
@@ -785,7 +785,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_br.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_br.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -796,7 +796,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_br.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_br.STL" />
       </geometry>
     </collision>
   </link>
@@ -837,7 +837,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_br.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_br.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -848,7 +848,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_br.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_br.STL" />
       </geometry>
     </collision>
   </link>
@@ -945,7 +945,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_bl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_bl.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -956,7 +956,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_abad_bl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_abad_bl.STL" />
       </geometry>
     </collision>
   </link>
@@ -997,7 +997,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_bl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_bl.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -1008,7 +1008,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_hip_bl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_hip_bl.STL" />
       </geometry>
     </collision>
   </link>
@@ -1049,7 +1049,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_bl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_bl.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -1060,7 +1060,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://cyberdog_description/meshes/link_knee_bl.STL" />
+        <mesh filename="package://xpp_cyberdog/meshes/link_knee_bl.STL" />
       </geometry>
     </collision>
   </link>
