@@ -1,34 +1,14 @@
 <?xml version="1.0"?>
-
 <package format="2">
     <name>xpp_cyberdog</name>
-    <version>1.0.10</version>
-    <description>
-        cyberdog-robot specific functions for visualization in the XPP Motion Framework.
-
-        These include inverse kinematics as well as urdf files for a one-legged,
-        two-legged and four legged robot with
-        <a href="http://dls.iit.it/">cyberdog</a>
-        legs.
-
-        The dynamic model can be found
-        <a href="https://github.com/iit-DLSLab/cyberdog-description">here</a>.
-
-        See also <a href="https://dls.iit.it">IIT</a>.
-    </description>
-
-    <author>Alexander W. Winkler</author>
-    <author email="depardo@ethz.ch">Diego Pardo.</author>
-    <author email="carlos.mastalli@iit.it">Carlos Mastalli</author>
-    <author email="ioannis@robots.ox.ac.uk">Ioannis Havoutis</author>
-    <maintainer email="alexander.w.winkler@gmail.com">Alexander W. Winkler</maintainer>
-    <license>BSD</license>
-
-    <url type="website">http://github.com/leggedrobotics/xpp</url>
-    <url type="bugtracker">http://github.com/leggedrobotics/xpp/issues</url>
+    <version>0.0.0</version>
+    <description>The cyberdog description package</description>
+    <maintainer email="fanziqi614@gmail.com">fan-ziqi</maintainer>
+    <license>TODO</license>
 
     <buildtool_depend>catkin</buildtool_depend>
     <depend>xacro</depend>
     <depend>roscpp</depend>
+    <depend>std_msgs</depend>
     <depend>xpp_vis</depend>
 </package>
